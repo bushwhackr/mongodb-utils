@@ -1,0 +1,17 @@
+version: 3
+
+vars:
+  MONGODB_SHELL_VERSION: 1.10.6
+  MONGODB_TOOLS_VERSION: 100.8.0
+  IMAGE_NAME: bushwhackr/mongodb-utils
+
+tasks:
+  build:
+    desc: Build the mongodb-utils docker image
+    cmds:
+      - docker buildx build --platform linux/amd64,linux/arm64 --build-arg MONGODB_SHELL_VERSION={{.MONGODB_SHELL_VERSION}} --build-arg MONGODB_TOOLS_VERSION={{.MONGODB_TOOLS_VERSION}} -t {{.IMAGE_NAME}}:latest -t {{.IMAGE_NAME}}:{{.MONGODB_TOOLS_VERSION }}_{{.MONGODB_SHELL_VERSION}} .
+
+  publish:
+    desc: Publish the mongodb-utils docker image
+    cmds:
+      - docker buildx build --platform linux/amd64,linux/arm64 --build-arg MONGODB_SHELL_VERSION={{.MONGODB_SHELL_VERSION}} --build-arg MONGODB_TOOLS_VERSION={{.MONGODB_TOOLS_VERSION}} -t {{.IMAGE_NAME}}:latest -t {{.IMAGE_NAME}}:{{.MONGODB_TOOLS_VERSION }}_{{.MONGODB_SHELL_VERSION}} . --push
