@@ -21,4 +21,12 @@ RUN DPKGARCH_TOOLS="$(dpkg --print-architecture | sed 's/amd64/x86_64/g')" && \
     rm mongodb-mongosh_${MONGODB_SHELL_VERSION}_${DPKGARCH_SHELL}.deb && \
     rm -rf /var/lib/apt/lists/*
 
+# Installing MinIO Client
+# https://docs.min.io/docs/minio-client-quickstart-guide.html
+RUN DPKGARCH_MC="$(dpkg --print-architecture)" && \
+    wget https://dl.min.io/client/mc/release/linux-amd64/mc -O /usr/local/bin/mc && \
+    chmod +x /usr/local/bin/mc
+
 USER nobody
+ENV HOME /tmp
+WORKDIR /tmp

@@ -6,6 +6,16 @@ vars:
   IMAGE_NAME: bushwhackr/mongodb-utils
 
 tasks:
+  run:
+    desc: Run the mongodb-utils docker image
+    cmds:
+      - docker run -it --rm {{.IMAGE_NAME}}:latest
+
+  build-local:
+    desc: Build the mongodb-utils docker image
+    cmds:
+      - docker buildx build --build-arg MONGODB_SHELL_VERSION={{.MONGODB_SHELL_VERSION}} --build-arg MONGODB_TOOLS_VERSION={{.MONGODB_TOOLS_VERSION}} -t {{.IMAGE_NAME}}:latest .
+
   build:
     desc: Build the mongodb-utils docker image
     cmds:
