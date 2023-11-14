@@ -1,8 +1,8 @@
 version: 3
 
 vars:
-  MONGODB_SHELL_VERSION: 1.10.6
-  MONGODB_TOOLS_VERSION: 100.8.0
+  MONGODB_SHELL_VERSION: 2.0.2
+  MONGODB_TOOLS_VERSION: 100.9.1
   IMAGE_NAME: bushwhackr/mongodb-utils
 
 tasks:
