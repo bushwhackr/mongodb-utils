@@ -1,8 +1,9 @@
 version: 3
 
 vars:
-  MONGODB_SHELL_VERSION: 2.0.2
-  MONGODB_TOOLS_VERSION: 100.9.1
+  MONGODB_SHELL_VERSION:
+    sh: curl https://api.github.com/repos/mongodb-js/mongosh/releases/latest | jq '.name'
+  MONGODB_TOOLS_VERSION: 100.9.3  # Manually updated
   IMAGE_NAME: bushwhackr/mongodb-utils
 
 tasks:
