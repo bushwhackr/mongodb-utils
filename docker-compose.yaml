@@ -1,0 +1,17 @@
+services:
+  mongodb:
+    image: mongo:6
+    environment:
+      MONGO_INITDB_ROOT_USERNAME: root
+      MONGO_INITDB_ROOT_PASSWORD: example
+    ports:
+      - 27017:27017
+    healthcheck:
+      test: echo 'db.runCommand("ping").ok' | mongo localhost:27017/test --quiet
+  mongodb-utils:
+    depends_on:
+      - mongodb
+    image: bushwhackr/mongodb-utils:latest
+    entrypoint: mongodump
+    command:
+      - mongodb://root:example@mongodb:27017

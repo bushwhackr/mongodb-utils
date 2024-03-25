@@ -26,3 +26,13 @@ tasks:
     desc: Publish the mongodb-utils docker image
     cmds:
       - docker buildx build --platform linux/amd64,linux/arm64 --build-arg MONGODB_SHELL_VERSION={{.MONGODB_SHELL_VERSION}} --build-arg MONGODB_TOOLS_VERSION={{.MONGODB_TOOLS_VERSION}} -t {{.IMAGE_NAME}}:latest -t {{.IMAGE_NAME}}:{{.MONGODB_TOOLS_VERSION }}_{{.MONGODB_SHELL_VERSION}} . --push
+
+  test:
+    desc: Test the mongodb-utils docker image
+    deps:
+      - task: build-local
+    cmds:
+      - docker compose -f docker-compose.yaml up mongodb -d
+      - defer: docker compose -f docker-compose.yaml down
+      - docker compose -f docker-compose.yaml up mongodb-utils
+      - docker compose -f docker-compose.yaml logs mongodb-utils | grep -Fq "done dumping"

@@ -9,8 +9,8 @@ permissions:
   contents: read
 
 on:
-#  schedule:  # https://crontab.guru/#0_0_1_*_*
-#    - cron: "0 0 1 * *"
+  schedule:  # https://crontab.guru/#0_0_1_*/3_*
+    - cron: "0 0 1 */4 *"
   workflow_dispatch: {}
 
 jobs:
@@ -33,6 +33,8 @@ jobs:
         uses: arduino/setup-task@v1
         with:
           repo-token: ${{ secrets.GITHUB_TOKEN }}
+      - name: Test the image
+        run: task test
       - name: Build and push
         run: task publish
 
